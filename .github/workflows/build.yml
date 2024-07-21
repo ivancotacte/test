@@ -1,13 +1,16 @@
 name: Update README.md
 on:
+  schedule:
+    - cron: '0 0 * * *'
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo code
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Node.js
@@ -27,13 +30,19 @@ jobs:
           npm install
           npm run update_readme
 
-      - if: (success())
-        name: Commit changes
+      - name: Check for changes
+        id: git-check
         run: |
-          git commit -m "Auto updated readme file" -a
+          git diff --exit-code || echo "Changes detected"
 
-      - if: (success())
-        name: Push changes
+      - name: Commit changes
+        if: steps.git-check.outputs.stdout == 'Changes detected'
+        run: |
+          git add README.md
+          git commit -m "Auto updated readme file"
+
+      - name: Push changes
+        if: success()
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
