@@ -23,9 +23,9 @@ let get_users = async function() {
 };
 
 module.exports = {
-    matchWord: 'TEST_REPO',
+    matchWord: 'BE_GRATEFUL',
     transforms: {
-      /* Match <!-- PUNTORIGEN:START (LAST_UPDATE) --> */
+      /* Match <!-- IVANCOTACTE:START (LAST_UPDATE) --> */
         async LAST_UPDATE(content, options) {
             let date = require('date-and-time');
             let format = (options.format)?options.format:'DD-MM-YYYY HH:mm';
