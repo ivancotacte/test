@@ -25,7 +25,7 @@ let get_users = async function() {
 module.exports = {
     matchWord: 'BE_GRATEFUL',
     transforms: {
-      /* Match <!-- IVANCOTACTE:START (LAST_UPDATE) --> */
+      /* Match <!-- BE_GRATEFUL:START (LAST_UPDATE) --> */
         async LAST_UPDATE(content, options) {
             let date = require('date-and-time');
             let format = (options.format)?options.format:'DD-MM-YYYY HH:mm';
