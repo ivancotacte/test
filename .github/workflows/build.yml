@@ -7,12 +7,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Update README.md
+      - name: Checkout repo code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Configure git with GitHub token
+        uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Modifies readme file
+        env:
+          REPO: ${{ github.repository }}
         run: |
-          echo "Hello, world!" > README.md
-          git config --local user.email "cotactearmenion@gmail.com"
-          git config --local user.name "Ivan Cotacte"
-          git add README.md
-          git commit -m "Update README.md"
-          git push
+          npm install
+          npm run update_readme
+
+      - if: (success())
+        name: Pushes commit with update to repo
+        uses: ad-m/github-push-action@master
+        with:
+          force: true
+          branch: ${{ github.ref }}
