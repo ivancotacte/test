@@ -1,4 +1,6 @@
 const got = require('got');
+const moment = require("moment-timezone");
+const encode = require('encodeurl');
 
 let config = {
     stars_repo : (process.env.REPO)?process.env.REPO:'ivancotacte/test'
@@ -25,13 +27,9 @@ let get_users = async function() {
 module.exports = {
     matchWord: 'TEST_REPO',
     transforms: {
-      /* Match <!-- PUNTORIGEN:START (LAST_UPDATE) --> */
-        async LAST_UPDATE(content, options) {
-            let date = require('date-and-time');
-            let format = (options.format)?options.format:'DD-MM-YYYY HH:mm';
-            let now_f = date.format(new Date(), format, true).replaceAll('-','--')+' (GMT 0)'; // gmt 0
-            let encode = require('encodeurl');
-            let encoded = encode(now_f);
+        async LAST_UPDATE(content) {
+            let currentTime = moment().tz("Asia/Manila").format('YYYY-MM-DD HH:mm:ss');
+            let encoded = encode(currentTime);
             return `![last_update](https://img.shields.io/badge/last%20update-${encoded}-blue)`;
         },
     },
