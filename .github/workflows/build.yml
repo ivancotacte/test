@@ -28,11 +28,6 @@ jobs:
           npm run update_readme
 
       - if: (success())
-        name: Commit changes
-        run: |
-          git commit -m "Auto updated readme file" -a
-
-      - if: (success())
         name: Push changes
         uses: ad-m/github-push-action@master
         with:
