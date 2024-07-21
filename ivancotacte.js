@@ -27,9 +27,12 @@ let get_users = async function() {
 module.exports = {
     matchWord: 'TEST_REPO',
     transforms: {
-        async LAST_UPDATE(content) {
-            let currentTime = moment().tz("Asia/Manila").format('YYYY-MM-DD HH:mm:ss');
-            let encoded = encode(currentTime);
+      /* Match <!-- PUNTORIGEN:START (LAST_UPDATE) --> */
+        async LAST_UPDATE(content, options) {
+            let date = require('date-and-time');
+            let format = (options.format)?options.format:'DD-MM-YYYY HH:mm';
+            let now_f = date.format(new Date(), format, true).replaceAll('-','--')+' (GMT 0)'; // gmt 0
+            let encoded = encode(now_f);
             return `![last_update](https://img.shields.io/badge/last%20update-${encoded}-blue)`;
         },
     },
