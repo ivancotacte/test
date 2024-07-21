@@ -33,8 +33,9 @@ jobs:
           git commit -m "Auto updated readme file" -a
 
       - if: (success())
-        name: Pushes commit with update to repo
+        name: Push changes
         uses: ad-m/github-push-action@master
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
           force: true
-          branch: ${{ github.ref }}

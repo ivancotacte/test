@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "markdown-magic": "latest",
+    "markdown-magic": "github:puntorigen/markdown-magic",
     "date-and-time": "^2.0.0",
     "encodeurl": "^1.0.2",
     "got": "^11.8.2"
